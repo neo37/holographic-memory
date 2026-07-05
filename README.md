@@ -189,7 +189,9 @@ Full timeline & Gantt: see **[docs/GTM_PLAN.md](docs/GTM_PLAN.md)**.
 
 ## 10. Documentation
 
-- 🌐 **[Live site (GitHub Pages) — holo.ai3d.art](https://holo.ai3d.art)** · fallback URL: [neo37.github.io/holographic-memory](https://neo37.github.io/holographic-memory/) — landing page source is [`index.html`](index.html)
+- 🌐 **Live site — [holo.ai3d.art](https://holo.ai3d.art)** (custom domain). Mirrors:
+  [GitHub Pages](https://neo37.github.io/holographic-memory/) ·
+  [GitLab Pages](https://holographic-memory-734791.gitlab.io) — landing source: [`index.html`](index.html)
 - 📋 **[Technical Specification (SRS) / Техническое задание](docs/TECHNICAL_SPEC.md)**
 - 🚀 **[Go-to-Market Plan & Gantt / План выхода на рынок](docs/GTM_PLAN.md)**
 - 🧩 **[MVP Status / Статус MVP](docs/MVP_STATUS.md)**
