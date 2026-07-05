@@ -1,0 +1,23 @@
+# Source research notes (not for public repo)
+first.info
+
+# Go
+*.exe
+*.out
+/bin/
+/dist/
+vendor/
+
+# Local data / stores
+*.sqlite
+*.db
+*.bin
+
+# Env / secrets
+.env
+*.key
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
