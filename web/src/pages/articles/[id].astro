@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { articles } from '../../data/articles.js';
+
+export function getStaticPaths() {
+  return articles.map((a) => ({ params: { id: a.id }, props: { article: a } }));
+}
+
+const { article } = Astro.props;
+---
+<Base title={`${article.en.title} — Holographic Memory`} description={article.en.paras[0]}>
+  <section><div class="wrap">
+    <div style="text-align:center">
+      <a class="back" href="/articles/"><span class="lang-en">← All articles</span><span class="lang-ru">← Все статьи</span></a>
+    </div>
+    <div class="langbar">
+      <button class="langbtn" data-setlang="en">EN</button>
+      <button class="langbtn" data-setlang="ru">RU</button>
+    </div>
+    <article class="prose">
+      <div class="kicker">{article.kicker}</div>
+      <div class="lang-en">
+        <h1>{article.en.title}</h1>
+        {article.en.paras.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="lang-ru">
+        <h1>{article.ru.title}</h1>
+        {article.ru.paras.map((p) => <p>{p}</p>)}
+      </div>
+    </article>
+  </div></section>
+</Base>

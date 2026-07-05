@@ -1,27 +1,39 @@
 stages:
+  - build
   - deploy
 
-# GitLab Pages — publishes the static landing page.
-# URL: https://<namespace>.gitlab.io/holographic-memory/
+# Build the Astro frontend (web/) into static files.
+build:
+  stage: build
+  image: node:22-alpine
+  script:
+    - cd web
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - web/dist
+    expire_in: 1 hour
+
+# GitLab Pages — serves the built Astro site.
 pages:
   stage: deploy
   image: alpine:latest
+  needs: ["build"]
   script:
     - mkdir -p public
-    - cp index.html public/
-    - cp robots.txt public/ 2>/dev/null || true
-    - cp sitemap.xml public/ 2>/dev/null || true
+    - cp -r web/dist/* public/
   artifacts:
     paths:
       - public
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
-# Deploy the landing page to the production server (nginx + Let's Encrypt).
-# Runs on the default branch; SSH creds come from protected CI/CD variables.
+# Deploy the built site to the production server (nginx + Let's Encrypt).
 deploy:server:
   stage: deploy
   image: alpine:latest
+  needs: ["build"]
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
   before_script:
@@ -30,5 +42,5 @@ deploy:server:
     - install -m 600 "$SSH_PRIVATE_KEY" ~/.ssh/id_ed25519
     - install -m 644 "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
   script:
-    - rsync -az index.html robots.txt sitemap.xml "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+    - rsync -az --delete web/dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
     - echo "Deployed to https://holo.ai3d.art"

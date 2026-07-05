@@ -24,3 +24,12 @@ vendor/
 
 # Claude Code local config
 .claude/
+
+# Local operational memory (internal notes, not for publishing)
+memory/
+
+# Node / Astro
+node_modules/
+web/node_modules/
+web/dist/
+web/.astro/

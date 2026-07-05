@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import { articles } from '../../data/articles.js';
+---
+<Base title="Insights — Holographic Memory" description="Articles on associative memory, Sparse Distributed Memory, and where the technology is going.">
+  <section><div class="wrap">
+    <h2 class="h2"><span class="lang-en">Insights</span><span class="lang-ru">Статьи</span></h2>
+    <p class="sub">
+      <span class="lang-en">Notes on associative memory, the math behind it, and where it's going.</span>
+      <span class="lang-ru">Заметки об ассоциативной памяти, математике за ней и о том, куда всё движется.</span>
+    </p>
+    <div class="langbar">
+      <button class="langbtn" data-setlang="en">EN</button>
+      <button class="langbtn" data-setlang="ru">RU</button>
+    </div>
+    <div class="articles">
+      {articles.map((a) => (
+        <article class="article">
+          <div class="kicker">{a.kicker}</div>
+          <div class="lang-en">
+            <h3>{a.en.title}</h3>
+            <p>{a.en.paras[0]}</p>
+            <a class="more" href={`/articles/${a.id}/`}>Read the full article →</a>
+          </div>
+          <div class="lang-ru">
+            <h3>{a.ru.title}</h3>
+            <p>{a.ru.paras[0]}</p>
+            <a class="more" href={`/articles/${a.id}/`}>Читать статью целиком →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div></section>
+</Base>

@@ -1,0 +1,123 @@
+---
+import '../styles/global.css';
+
+const {
+  title = 'Holographic Memory — Associative Long-Term Memory for Claude & Cursor (MCP)',
+  description = 'Open-source, privacy-first holographic long-term memory for AI agents. Built on Kanerva SDM, it recalls by association — not keywords. Free local mode, $5/mo encrypted cloud sync for Claude Desktop & Cursor via MCP.',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content="MCP server, AI memory, long-term memory, Claude Desktop, Cursor, holographic memory, Sparse Distributed Memory, Kanerva SDM, associative memory, vector RAG alternative, Model Context Protocol, agent memory" />
+  <meta name="author" content="Holographic Memory" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#0b0e26" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:site_name" content="Holographic Memory" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Holographic Memory',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Linux, macOS, Windows',
+    description: 'Open-source holographic long-term memory for AI agents, built on Kanerva Sparse Distributed Memory. Associative recall via the Model Context Protocol for Claude Desktop and Cursor.',
+    url: 'https://holo.ai3d.art/',
+    offers: [
+      { '@type': 'Offer', name: 'Local', price: '0', priceCurrency: 'USD' },
+      { '@type': 'Offer', name: 'Cloud / Pro', price: '5', priceCurrency: 'USD' },
+    ],
+    license: 'https://www.gnu.org/licenses/agpl-3.0.html',
+  })} />
+
+  <script is:inline>
+    /* auto-detect language before paint to avoid a flash of both languages */
+    document.documentElement.setAttribute("data-lang", (function () {
+      try { var s = localStorage.getItem("hm_lang"); if (s) return s; } catch (e) {}
+      return (navigator.language || "en").toLowerCase().indexOf("ru") === 0 ? "ru" : "en";
+    })());
+  </script>
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="/"><span class="dot"></span> Holographic Memory</a>
+    <span class="spacer"></span>
+    <a class="link" href="/#how">How it works</a>
+    <a class="link" href="/#tools">Tools</a>
+    <a class="link" href="/articles/">Insights</a>
+    <a class="link" href="/#pricing">Pricing</a>
+    <a class="link" href="/#contact">Contact</a>
+    <a class="link" href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">GitHub ★</a>
+    <a class="btn primary" href="/#install">Install free</a>
+  </header>
+
+  <slot />
+
+  <footer><div class="wrap foot">
+    <span class="brand" style="font-size:16px"><span class="dot"></span> Holographic Memory</span>
+    <span>Open-source Kanerva SDM memory for AI agents · <a href="https://holo.ai3d.art">holo.ai3d.art</a></span>
+    <span>
+      <a href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">GitHub</a> ·
+      <a href="https://github.com/neo37/holographic-memory/blob/master/docs/TECHNICAL_SPEC.md" target="_blank" rel="noopener">Spec</a> ·
+      <a href="https://github.com/neo37/holographic-memory/blob/master/docs/GTM_PLAN.md" target="_blank" rel="noopener">Roadmap</a>
+    </span>
+  </div></footer>
+
+  <script is:inline>
+    (function () {
+      var root = document.documentElement;
+      function apply(l) {
+        root.setAttribute("data-lang", l);
+        try { localStorage.setItem("hm_lang", l); } catch (e) {}
+        document.querySelectorAll(".langbtn").forEach(function (b) {
+          b.classList.toggle("on", b.dataset.setlang === l);
+        });
+        document.querySelectorAll("#cf-type option").forEach(function (o) {
+          var t = o.getAttribute("data-" + l);
+          if (t) o.textContent = t;
+        });
+      }
+      apply(root.getAttribute("data-lang") || "en");
+      document.querySelectorAll(".langbtn").forEach(function (b) {
+        b.addEventListener("click", function () { apply(b.dataset.setlang); });
+      });
+      var form = document.getElementById("contact-form");
+      if (form) form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var val = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; };
+        var sel = document.getElementById("cf-type");
+        var type = sel.options[sel.selectedIndex].text;
+        var subject = "[" + type + "] Holographic Memory — " + val("cf-name");
+        var body =
+          "Name: " + val("cf-name") + "\n" +
+          "Contact: " + val("cf-contact") + "\n" +
+          "Company: " + val("cf-company") + "\n" +
+          "Request: " + type + "\n\n" +
+          val("cf-msg");
+        window.location.href =
+          "mailto:hello@holo.ai3d.art?subject=" + encodeURIComponent(subject) +
+          "&body=" + encodeURIComponent(body);
+      });
+    })();
+  </script>
+</body>
+</html>
