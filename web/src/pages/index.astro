@@ -3,26 +3,26 @@ import Base from '../layouts/Base.astro';
 import { articles } from '../data/articles.js';
 ---
 <Base>
-  <!-- HERO -->
+  <!-- HERO — asymmetric split: value prop left, live product preview right -->
   <div class="wrap hero">
-    <span class="eyebrow rise">◆ Open-source · Privacy-first · MCP</span>
-    <h1 class="rise" style="animation-delay:.05s">Memory that thinks by association, not keywords</h1>
-    <p class="lead rise" style="animation-delay:.12s">Long-term memory for Claude Desktop &amp; Cursor, built on Kanerva's
-      Sparse Distributed Memory — the associative model recent research proved equivalent to Transformer Attention.
-      It recalls the <em>meaning</em> behind a vague prompt, even from noise.</p>
-    <div class="cta rise" style="animation-delay:.18s">
-      <a class="btn primary" href="#install">Install free (local)</a>
-      <a class="btn ghost" href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">★ Star on GitHub</a>
+    <div class="reveal in">
+      <span class="eyebrow">Open-source · Kanerva SDM · MCP</span>
+      <h1>Memory that recalls by meaning, not keywords</h1>
+      <p class="lead">Long-term associative memory for Claude &amp; Cursor, built on Kanerva's
+        Sparse Distributed Memory. Recalls the meaning behind a vague prompt.</p>
+      <div class="cta">
+        <a class="btn primary" href="#install">Install free</a>
+        <a class="btn ghost" href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">Star on GitHub</a>
+      </div>
     </div>
-    <p class="trust rise" style="animation-delay:.24s">100% open-source · Your memories never leave your machine · $5/mo optional cloud sync</p>
 
-    <div class="demo rise" style="animation-delay:.3s">
-      <div class="bar"><i></i><i></i><i></i> &nbsp;Claude · Holographic Memory</div>
+    <div class="demo reveal in">
+      <div class="bar"><i></i><i></i><i></i> &nbsp;claude · holographic-memory</div>
       <div class="body">
         <div class="when">Week 1</div>
         <div class="msg u">I really don't like Python.</div>
-        <div class="msg a">Noted — I'll remember that. 🧠</div>
-        <div class="when">Week 4 · different chat</div>
+        <div class="msg a">Noted — I'll remember that.</div>
+        <div class="when">Week 4 · a different chat</div>
         <div class="msg u">What should I write this quick script in?</div>
         <div class="msg a">Go — you told me you dislike Python, and Go fits a quick CLI well.
           <div class="recall">↺ recalled by association · no keyword match</div>
@@ -31,60 +31,64 @@ import { articles } from '../data/articles.js';
     </div>
   </div>
 
+  <div class="wrap">
+    <div class="trust reveal">
+      <span><b>100%</b> open-source</span>
+      <span><b>Local mode</b> — data never leaves your machine</span>
+      <span><b>$5/mo</b> optional encrypted cloud sync</span>
+    </div>
+  </div>
+
   <!-- COMPARISON -->
-  <section id="how"><div class="wrap">
+  <section id="how"><div class="wrap reveal">
     <h2 class="h2">Plain RAG can't do that. Interference can.</h2>
-    <p class="sub">Classic vector RAG is literal: no keyword overlap, no hit. SDM smears every fact across a
+    <p class="lead-c">Vector RAG is literal — no keyword overlap, no hit. SDM smears every fact across a
       10,000-dimensional space and reconstructs the signal by majority vote inside the activation radius.</p>
     <div class="cmp">
-      <table>
-        <thead><tr><th></th><th>Vector RAG</th><th>Holographic Memory (SDM)</th></tr></thead>
-        <tbody>
-          <tr><td>Match model</td><td class="rag">keyword / cosine</td><td class="sdm">associative interference</td></tr>
-          <tr><td>Vague query</td><td class="rag">misses</td><td class="sdm">reconstructs from noise</td></tr>
-          <tr><td>Conflicting facts</td><td class="rag">silently coexist</td><td class="sdm">flagged as interference</td></tr>
-          <tr><td>Foundation</td><td class="rag">ad-hoc embeddings</td><td class="sdm">Kanerva SDM ≈ Attention</td></tr>
-        </tbody>
-      </table>
+      <div class="cmp-row cmp-head"><div></div><div>Vector RAG</div><div>Holographic Memory (SDM)</div></div>
+      <div class="cmp-row"><div class="k">Match model</div><div class="rag">keyword / cosine</div><div class="sdm">associative interference</div></div>
+      <div class="cmp-row"><div class="k">Vague query</div><div class="rag">misses</div><div class="sdm">reconstructs from noise</div></div>
+      <div class="cmp-row"><div class="k">Conflicting facts</div><div class="rag">silently coexist</div><div class="sdm">flagged as interference</div></div>
+      <div class="cmp-row"><div class="k">Foundation</div><div class="rag">ad-hoc embeddings</div><div class="sdm">Kanerva SDM ≈ Attention</div></div>
     </div>
   </div></section>
 
   <!-- TOOLS -->
-  <section id="tools"><div class="wrap">
+  <section id="tools"><div class="wrap reveal">
     <h2 class="h2">Four tools your agent will actually use</h2>
-    <p class="sub">Declared over MCP (stdio). Each one does something a plain database can't.</p>
+    <p class="lead-c">Declared over MCP (stdio). Each does something a plain database can't.</p>
     <div class="grid">
       <div class="tool"><div class="tag">recall_by_association</div><h3>Associative recall</h3>
-        <p>Retrieve a de-noised "meaning cloud" from a vague or emotional cue — instantly remember context mentioned only in passing.</p></div>
+        <p>Retrieve a de-noised meaning cloud from a vague or emotional cue — remember context mentioned only in passing.</p></div>
       <div class="tool"><div class="tag">store_holographic_snapshot</div><h3>Distributed write</h3>
-        <p>Store a fact with context, emotional valence, importance and tags, superposed across the association cloud.</p></div>
+        <p>Store a fact with context, valence, importance and tags, superposed across the association cloud.</p></div>
       <div class="tool"><div class="tag">interference_analysis</div><h3>Conflict detection</h3>
-        <p>Spot when a new fact contradicts an existing belief and surface it — "You moved? I had London on file."</p></div>
+        <p>Spot when a new fact contradicts an existing belief and surface it, with a confidence score.</p></div>
       <div class="tool"><div class="tag">consolidate_and_prune</div><h3>Sleep &amp; compress</h3>
         <p>Drop weak associations, reinforce frequent ones — keeps the store fast and free of clutter.</p></div>
     </div>
   </div></section>
 
   <!-- INTERFERENCE MOMENT -->
-  <section><div class="wrap">
+  <section><div class="wrap reveal">
     <div class="inter">
       <p class="q">"You moved to Berlin? <span class="n">I remembered London</span> — want me to update that?"</p>
-      <p class="sub" style="margin:14px auto 0">Interference detection makes the agent feel human — it notices when your story changes.</p>
+      <p class="sub">Interference detection makes the agent feel human — it notices when your story changes.</p>
     </div>
   </div></section>
 
   <!-- PRICING -->
-  <section id="pricing"><div class="wrap">
+  <section id="pricing"><div class="wrap center reveal">
     <h2 class="h2">Free to run. $5 to forget nothing, everywhere.</h2>
-    <p class="sub">The engine is open-source and free forever. Pay only for convenience open code can't copy.</p>
-    <div class="plans">
+    <p class="lead-c">The engine is open-source and free forever. Pay only for convenience open code can't copy.</p>
+    <div class="plans" style="text-align:left">
       <div class="plan">
         <div class="name">Local</div>
         <div class="price">Free</div>
-        <div style="color:var(--muted);font-size:13px">Open-source · AGPL-3.0</div>
+        <div class="edition">Open-source · AGPL-3.0</div>
         <ul>
           <li>Full SDM engine + all 4 tools</li>
-          <li>Local SQLite store</li>
+          <li>Local store</li>
           <li>100% private — nothing leaves your machine</li>
           <li>Runs in Claude Desktop &amp; Cursor</li>
         </ul>
@@ -93,39 +97,39 @@ import { articles } from '../data/articles.js';
       <div class="plan feat">
         <div class="name">Cloud / Pro</div>
         <div class="price">$5<small>/mo</small></div>
-        <div style="color:var(--muted);font-size:13px">Everything in Local, plus</div>
+        <div class="edition">Everything in Local, plus</div>
         <ul>
           <li>Encrypted cross-device sync</li>
           <li>Same memory in Claude at work &amp; Cursor at home</li>
           <li>Managed hosting + automatic backups</li>
           <li>Semantic-cloud visualization</li>
         </ul>
-        <a class="btn primary" href="#contact">Get Pro</a>
+        <a class="btn primary" href="#contact">Request access</a>
       </div>
       <div class="plan">
         <div class="name">Business</div>
         <div class="price">Custom</div>
-        <div style="color:var(--muted);font-size:13px">B2B</div>
+        <div class="edition">B2B</div>
         <ul>
           <li>Dual-licensing for closed-source products</li>
           <li>Custom SDM integrations</li>
           <li>Priority support &amp; consulting</li>
           <li>SIEM / logs &amp; game-engine modules</li>
         </ul>
-        <a class="btn ghost" href="#contact">Contact</a>
+        <a class="btn ghost" href="#contact">Contact sales</a>
       </div>
     </div>
   </div></section>
 
   <!-- INSTALL -->
-  <section id="install"><div class="wrap">
+  <section id="install"><div class="wrap center reveal">
     <h2 class="h2">One command to remember</h2>
-    <p class="sub">Free local mode needs no key. Add a license key only for encrypted cloud sync.</p>
-    <div class="install">
+    <p class="lead-c">Free local mode needs no key. Add a license key only for encrypted cloud sync.</p>
+    <div class="install" style="text-align:left">
       <div class="bar">terminal — via Smithery</div>
       <pre>npx -y @smithery/cli install holographic-memory</pre>
     </div>
-    <div class="install" style="margin-top:16px">
+    <div class="install" style="text-align:left">
       <div class="bar">claude_desktop_config.json</div>
 <pre>{`{
   "mcpServers": {
@@ -143,9 +147,9 @@ import { articles } from '../data/articles.js';
   </div></section>
 
   <!-- INSIGHTS -->
-  <section id="insights"><div class="wrap">
+  <section id="insights"><div class="wrap center reveal">
     <h2 class="h2"><span class="lang-en">Insights</span><span class="lang-ru">Статьи</span></h2>
-    <p class="sub">
+    <p class="lead-c">
       <span class="lang-en">Notes on associative memory, the math behind it, and where it's going.</span>
       <span class="lang-ru">Заметки об ассоциативной памяти, математике за ней и о том, куда всё движется.</span>
     </p>
@@ -153,7 +157,7 @@ import { articles } from '../data/articles.js';
       <button class="langbtn" data-setlang="en">EN</button>
       <button class="langbtn" data-setlang="ru">RU</button>
     </div>
-    <div class="articles">
+    <div class="articles" style="text-align:left">
       {articles.map((a) => (
         <article class="article">
           <div class="kicker">{a.kicker}</div>
@@ -170,20 +174,16 @@ import { articles } from '../data/articles.js';
         </article>
       ))}
     </div>
-    <p class="sub" style="margin-top:22px">
-      <span class="lang-en">See <a href="/articles/" style="color:var(--cyan)">all articles →</a></span>
-      <span class="lang-ru">Все <a href="/articles/" style="color:var(--cyan)">статьи →</a></span>
-    </p>
   </div></section>
 
   <!-- CONTACT -->
-  <section id="contact"><div class="wrap">
+  <section id="contact"><div class="wrap center reveal">
     <h2 class="h2"><span class="lang-en">Partnership &amp; demo</span><span class="lang-ru">Партнёрство и демо</span></h2>
-    <p class="sub">
+    <p class="lead-c">
       <span class="lang-en">Want a live demo, a commercial license, or to build something together? Send a note.</span>
       <span class="lang-ru">Нужна демонстрация, коммерческая лицензия или совместный проект? Напишите нам.</span>
     </p>
-    <form class="cform" id="contact-form">
+    <form class="cform" id="contact-form" style="text-align:left">
       <div class="grid2">
         <div class="field">
           <label class="lang-en" for="cf-name">Name</label><label class="lang-ru" for="cf-name">Имя</label>
@@ -216,9 +216,10 @@ import { articles } from '../data/articles.js';
       <button class="btn primary" type="submit">
         <span class="lang-en">Send request</span><span class="lang-ru">Отправить заявку</span>
       </button>
+      <p id="cf-status" class="note" role="status" aria-live="polite"></p>
       <p class="note">
-        <span class="lang-en">Opens your email app addressed to the team. Prefer GitHub? <a href="https://github.com/neo37/holographic-memory/issues/new" target="_blank" rel="noopener" style="color:var(--primary)">Open an issue</a>.</span>
-        <span class="lang-ru">Откроется ваш почтовый клиент с письмом команде. Удобнее через GitHub? <a href="https://github.com/neo37/holographic-memory/issues/new" target="_blank" rel="noopener" style="color:var(--primary)">Создайте issue</a>.</span>
+        <span class="lang-en">Prefer GitHub? <a href="https://github.com/neo37/holographic-memory/issues/new" target="_blank" rel="noopener">Open an issue</a>.</span>
+        <span class="lang-ru">Удобнее через GitHub? <a href="https://github.com/neo37/holographic-memory/issues/new" target="_blank" rel="noopener">Создайте issue</a>.</span>
       </p>
     </form>
   </div></section>

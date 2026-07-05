@@ -3,9 +3,9 @@ import Base from '../../layouts/Base.astro';
 import { articles } from '../../data/articles.js';
 ---
 <Base title="Insights — Holographic Memory" description="Articles on associative memory, Sparse Distributed Memory, and where the technology is going.">
-  <section><div class="wrap">
+  <section><div class="wrap center">
     <h2 class="h2"><span class="lang-en">Insights</span><span class="lang-ru">Статьи</span></h2>
-    <p class="sub">
+    <p class="lead-c">
       <span class="lang-en">Notes on associative memory, the math behind it, and where it's going.</span>
       <span class="lang-ru">Заметки об ассоциативной памяти, математике за ней и о том, куда всё движется.</span>
     </p>
@@ -13,7 +13,7 @@ import { articles } from '../../data/articles.js';
       <button class="langbtn" data-setlang="en">EN</button>
       <button class="langbtn" data-setlang="ru">RU</button>
     </div>
-    <div class="articles">
+    <div class="articles" style="text-align:left">
       {articles.map((a) => (
         <article class="article">
           <div class="kicker">{a.kicker}</div>
