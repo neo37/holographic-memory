@@ -24,14 +24,14 @@ export const articles = [
     en: {
       title: 'Sparse Distributed Memory ≈ Attention',
       paras: [
-        "The engine is Kanerva's SDM, first described at MIT. Recent work (2021–2026) proved it is mathematically equivalent to the Attention mechanism inside Transformers — the very thing that powers GPT-4 and Claude.",
+        "The engine is Kanerva's SDM, first described in MIT Press. Recent work (2021–2026) proved it is mathematically equivalent to the Attention mechanism inside Transformers — the very thing that powers GPT-4 and Claude.",
         'So this isn\'t exotica bolted onto an LLM. It\'s the same principle, exposed as durable, write-once-recall-forever memory the model can reach through MCP.',
       ],
     },
     ru: {
       title: 'Разреженная распределённая память ≈ Attention',
       paras: [
-        'В основе — SDM Канервы, впервые описанная в MIT. Недавние работы (2021–2026) доказали её математическую эквивалентность механизму Attention в трансформерах — тому самому, на котором работают GPT-4 и Claude.',
+        'В основе — SDM Канервы, впервые описанная в MIT Press. Недавние работы (2021–2026) доказали её математическую эквивалентность механизму Attention в трансформерах — тому самому, на котором работают GPT-4 и Claude.',
         'Это не экзотика сбоку от LLM, а тот же принцип — только вынесенный в долговременную память, к которой модель обращается через MCP.',
       ],
     },
