@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
@@ -163,11 +163,49 @@ section{padding:56px 0}
 .install pre{margin:0;padding:20px;font-size:14px;overflow-x:auto;color:#2a2d3c}
 .install .cmt{color:var(--muted)}
 
+/* language toggle + bilingual content */
+.langbar{display:flex;justify-content:center;gap:8px;margin:-14px 0 26px}
+.langbtn{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;padding:6px 16px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.langbtn:hover{background:rgba(255,255,255,.2)}
+.langbtn.on{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-color:transparent}
+:root[data-lang="en"] .lang-ru{display:none}
+:root[data-lang="ru"] .lang-en{display:none}
+
+/* article cards */
+.articles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.article{background:var(--card);color:var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
+.article .kicker{font-family:'Fira Code',monospace;font-size:12px;font-weight:500;color:var(--primary);text-transform:uppercase;letter-spacing:.5px}
+.article h3{margin:10px 0 10px;font-size:19px;line-height:1.25;text-wrap:balance}
+.article p{margin:0 0 10px;color:#43465a;font-size:14.5px}
+.article p:last-child{margin-bottom:0}
+
+/* contact form */
+.cform{background:var(--card);color:var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);
+  max-width:640px;margin:0 auto;padding:28px}
+.cform .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cform label{display:block;font-size:13px;font-weight:600;color:#2a2d3c;margin:0 0 6px}
+.cform input,.cform select,.cform textarea{width:100%;padding:11px 13px;border:1px solid #d9dce6;border-radius:10px;
+  font-family:inherit;font-size:14px;color:var(--ink);background:#fff}
+.cform input:focus,.cform select:focus,.cform textarea:focus{outline:2px solid var(--primary);border-color:transparent}
+.cform textarea{min-height:110px;resize:vertical}
+.cform .field{margin-bottom:14px}
+.cform .btn{width:100%;justify-content:center;margin-top:4px}
+.cform .note{font-size:12.5px;color:var(--muted);text-align:center;margin:12px 0 0}
+@media (max-width:520px){.cform .grid2{grid-template-columns:1fr}}
+
 footer{padding:44px 0;border-top:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:14px}
 .foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
 footer a{color:rgba(255,255,255,.8);text-decoration:none}
 footer a:hover{color:#fff}
 </style>
+<script>
+/* auto-detect language before paint to avoid a flash of both languages */
+document.documentElement.setAttribute("data-lang", (function () {
+  try { var s = localStorage.getItem("hm_lang"); if (s) return s; } catch (e) {}
+  return (navigator.language || "en").toLowerCase().indexOf("ru") === 0 ? "ru" : "en";
+})());
+</script>
 </head>
 <body>
 
@@ -176,7 +214,9 @@ footer a:hover{color:#fff}
   <span class="spacer"></span>
   <a class="link" href="#how">How it works</a>
   <a class="link" href="#tools">Tools</a>
+  <a class="link" href="#insights">Insights</a>
   <a class="link" href="#pricing">Pricing</a>
+  <a class="link" href="#contact">Contact</a>
   <a class="link" href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">GitHub ★</a>
   <a class="btn primary" href="#install">Install free</a>
 </header>
@@ -321,6 +361,133 @@ footer a:hover{color:#fff}
   </div>
 </div></section>
 
+<!-- INSIGHTS / ARTICLES -->
+<section id="insights"><div class="wrap">
+  <h2 class="h2"><span class="lang-en">Insights</span><span class="lang-ru">Статьи</span></h2>
+  <p class="sub">
+    <span class="lang-en">Notes on associative memory, the math behind it, and where it's going.</span>
+    <span class="lang-ru">Заметки об ассоциативной памяти, математике за ней и о том, куда всё движется.</span>
+  </p>
+  <div class="langbar">
+    <button class="langbtn" data-setlang="en">EN</button>
+    <button class="langbtn" data-setlang="ru">RU</button>
+  </div>
+  <div class="articles">
+    <article class="article">
+      <div class="kicker">01 · Fundamentals</div>
+      <div class="lang-en">
+        <h3>Why associative memory beats vector RAG</h3>
+        <p>Vector RAG matches on surface similarity: no shared keywords, no hit. It cannot connect
+          "I dislike Python" to a later "what should I write this script in?" — the words don't overlap.</p>
+        <p>Holographic memory smears each fact across a 10,000-dimensional space and reconstructs the
+          signal by majority vote inside the activation radius. It survives noise and vague cues, and
+          surfaces the connection RAG never sees: <em>"Go — you dislike Python."</em></p>
+      </div>
+      <div class="lang-ru">
+        <h3>Почему ассоциативная память сильнее векторного RAG</h3>
+        <p>Векторный RAG ищет по поверхностному сходству: нет общих слов — нет результата. Он не свяжет
+          «не люблю Python» с более поздним «на чём написать скрипт?» — слова не пересекаются.</p>
+        <p>Голографическая память «размазывает» факт по 10 000-мерному пространству и восстанавливает
+          сигнал по правилу большинства внутри радиуса активации. Она устойчива к шуму и смутным
+          запросам и находит связь, которую RAG не видит: <em>«Go — ты же не любишь Python».</em></p>
+      </div>
+    </article>
+
+    <article class="article">
+      <div class="kicker">02 · Theory</div>
+      <div class="lang-en">
+        <h3>Sparse Distributed Memory ≈ Attention</h3>
+        <p>The engine is Kanerva's SDM, first described at MIT. Recent work (2021–2026) proved it is
+          mathematically equivalent to the Attention mechanism inside Transformers — the very thing that
+          powers GPT-4 and Claude.</p>
+        <p>So this isn't exotica bolted onto an LLM. It's the same principle, exposed as durable,
+          write-once-recall-forever memory the model can reach through MCP.</p>
+      </div>
+      <div class="lang-ru">
+        <h3>Разреженная распределённая память ≈ Attention</h3>
+        <p>В основе — SDM Канервы, впервые описанная в MIT. Недавние работы (2021–2026) доказали её
+          математическую эквивалентность механизму Attention в трансформерах — тому самому, на котором
+          работают GPT-4 и Claude.</p>
+        <p>Это не экзотика сбоку от LLM, а тот же принцип — только вынесенный в долговременную память,
+          к которой модель обращается через MCP.</p>
+      </div>
+    </article>
+
+    <article class="article">
+      <div class="kicker">03 · Frontier</div>
+      <div class="lang-en">
+        <h3>From AI memory to a robot's "muscle memory"</h3>
+        <p>Kanerva designed SDM as a digital model of the cerebellum — the seat of motor skill. For narrow,
+          motor tasks (walking, skating) that turns a weakness into a strength: repetition builds a stable
+          interference pattern. The more it walks, the better it walks.</p>
+        <p>The far horizon: bake a trained skill into a physical optical hologram and read it at the speed
+          of light — a "crystal of parkour" for humanoid robots and drones. Today: simulation. But the
+          vector is set.</p>
+      </div>
+      <div class="lang-ru">
+        <h3>От памяти ИИ к «мышечной памяти» робота</h3>
+        <p>Канерва задумывал SDM как цифровую модель мозжечка — центра моторики. Для узких моторных задач
+          (ходьба, катание) это превращает минус в плюс: повторение формирует устойчивую интерференционную
+          картину. Чем больше ходишь — тем лучше ходишь.</p>
+        <p>Дальний горизонт: записать навык в физическую оптическую голограмму и считывать его со скоростью
+          света — «кристалл паркура» для человекоподобных роботов и дронов. Пока — симуляция. Но вектор
+          задан.</p>
+      </div>
+    </article>
+  </div>
+  <p class="sub" style="margin-top:22px">
+    <span class="lang-en">More in the <a href="https://github.com/neo37/holographic-memory/blob/master/docs/story-holographic-memory.md" target="_blank" rel="noopener" style="color:var(--cyan)">full project story →</a></span>
+    <span class="lang-ru">Подробнее — в <a href="https://github.com/neo37/holographic-memory/blob/master/docs/story-holographic-memory.md" target="_blank" rel="noopener" style="color:var(--cyan)">полной истории проекта →</a></span>
+  </p>
+</div></section>
+
+<!-- CONTACT -->
+<section id="contact"><div class="wrap">
+  <h2 class="h2"><span class="lang-en">Partnership &amp; demo</span><span class="lang-ru">Партнёрство и демо</span></h2>
+  <p class="sub">
+    <span class="lang-en">Want a live demo, a commercial license, or to build something together? Send a note.</span>
+    <span class="lang-ru">Нужна демонстрация, коммерческая лицензия или совместный проект? Напишите нам.</span>
+  </p>
+  <form class="cform" id="contact-form">
+    <div class="grid2">
+      <div class="field">
+        <label class="lang-en" for="cf-name">Name</label><label class="lang-ru" for="cf-name">Имя</label>
+        <input id="cf-name" name="name" required autocomplete="name"/>
+      </div>
+      <div class="field">
+        <label class="lang-en" for="cf-contact">Email or Telegram</label><label class="lang-ru" for="cf-contact">Email или Telegram</label>
+        <input id="cf-contact" name="contact" required placeholder="you@company.com / @handle"/>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label class="lang-en" for="cf-company">Company</label><label class="lang-ru" for="cf-company">Компания</label>
+        <input id="cf-company" name="company" autocomplete="organization"/>
+      </div>
+      <div class="field">
+        <label class="lang-en" for="cf-type">Request type</label><label class="lang-ru" for="cf-type">Тип запроса</label>
+        <select id="cf-type" name="type">
+          <option value="demo" data-en="Live demo" data-ru="Демонстрация">Live demo</option>
+          <option value="partnership" data-en="Partnership" data-ru="Партнёрство">Partnership</option>
+          <option value="commercial" data-en="Commercial license" data-ru="Коммерческая лицензия">Commercial license</option>
+          <option value="other" data-en="Other" data-ru="Другое">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label class="lang-en" for="cf-msg">Message</label><label class="lang-ru" for="cf-msg">Сообщение</label>
+      <textarea id="cf-msg" name="message" required></textarea>
+    </div>
+    <button class="btn primary" type="submit">
+      <span class="lang-en">Send request</span><span class="lang-ru">Отправить заявку</span>
+    </button>
+    <p class="note">
+      <span class="lang-en">Opens your email app addressed to the team. Prefer GitHub? <a href="https://github.com/neo37/holographic-memory/issues/new" target="_blank" rel="noopener" style="color:var(--primary)">Open an issue</a>.</span>
+      <span class="lang-ru">Откроется ваш почтовый клиент с письмом команде. Удобнее через GitHub? <a href="https://github.com/neo37/holographic-memory/issues/new" target="_blank" rel="noopener" style="color:var(--primary)">Создайте issue</a>.</span>
+    </p>
+  </form>
+</div></section>
+
 <footer><div class="wrap foot">
   <span class="brand"><span class="dot"></span> Holographic Memory</span>
   <span>Open-source Kanerva SDM memory for AI agents · <a href="https://holo.ai3d.art">holo.ai3d.art</a></span>
@@ -331,5 +498,44 @@ footer a:hover{color:#fff}
   </span>
 </div></footer>
 
+<script>
+(function () {
+  var root = document.documentElement;
+  function apply(l) {
+    root.setAttribute("data-lang", l);
+    try { localStorage.setItem("hm_lang", l); } catch (e) {}
+    document.querySelectorAll(".langbtn").forEach(function (b) {
+      b.classList.toggle("on", b.dataset.setlang === l);
+    });
+    document.querySelectorAll("#cf-type option").forEach(function (o) {
+      var t = o.getAttribute("data-" + l);
+      if (t) o.textContent = t;
+    });
+  }
+  apply(root.getAttribute("data-lang") || "en");
+
+  document.querySelectorAll(".langbtn").forEach(function (b) {
+    b.addEventListener("click", function () { apply(b.dataset.setlang); });
+  });
+
+  var form = document.getElementById("contact-form");
+  if (form) form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var val = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; };
+    var sel = document.getElementById("cf-type");
+    var type = sel.options[sel.selectedIndex].text;
+    var subject = "[" + type + "] Holographic Memory — " + val("cf-name");
+    var body =
+      "Name: " + val("cf-name") + "\n" +
+      "Contact: " + val("cf-contact") + "\n" +
+      "Company: " + val("cf-company") + "\n" +
+      "Request: " + type + "\n\n" +
+      val("cf-msg");
+    window.location.href =
+      "mailto:hello@holo.ai3d.art?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  });
+})();
+</script>
 </body>
 </html>
