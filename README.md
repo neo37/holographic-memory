@@ -1,6 +1,7 @@
 # 🧠 Holographic Memory — MCP Server (Go)
 
-**🌐 [holo.ai3d.art](https://holo.ai3d.art)** &nbsp;·&nbsp; Open-source · Privacy-first · $5/mo cloud
+**🌐 Website:** [holo.ai3d.art](https://holo.ai3d.art) &nbsp;·&nbsp; **Live (GitHub Pages):** [neo37.github.io/holographic-memory](https://neo37.github.io/holographic-memory/)
+&nbsp;·&nbsp; Open-source · Privacy-first · $5/mo cloud
 
 > The first **fully open-source, privacy-first holographic long-term memory** for AI agents.
 > Built on Kanerva's **Sparse Distributed Memory (SDM)** — the associative memory that recent
@@ -188,8 +189,11 @@ Full timeline & Gantt: see **[docs/GTM_PLAN.md](docs/GTM_PLAN.md)**.
 
 ## 10. Documentation
 
+- 🌐 **[Live site (GitHub Pages) — holo.ai3d.art](https://holo.ai3d.art)** · fallback URL: [neo37.github.io/holographic-memory](https://neo37.github.io/holographic-memory/) — landing page source is [`index.html`](index.html)
 - 📋 **[Technical Specification (SRS) / Техническое задание](docs/TECHNICAL_SPEC.md)**
 - 🚀 **[Go-to-Market Plan & Gantt / План выхода на рынок](docs/GTM_PLAN.md)**
+- 🧩 **[MVP Status / Статус MVP](docs/MVP_STATUS.md)**
+- 📖 **[Project Story / История проекта](docs/story-holographic-memory.md)**
 
 ## 11. License
 
