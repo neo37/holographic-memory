@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "holographic-memory"
+version = "0.1.0"
+description = "Associative long-term memory for AI agents (Kanerva SDM) over MCP"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "AGPL-3.0-or-later" }
+authors = [{ name = "Holographic Memory contributors" }]
+keywords = ["mcp", "memory", "sdm", "kanerva", "claude", "cursor", "ai-agent"]
+dependencies = ["numpy>=1.24"]
+
+[project.urls]
+Homepage = "https://holo.ai3d.art"
+Repository = "https://github.com/neo37/holographic-memory"
+
+[project.scripts]
+holographic-memory-server = "holographic_memory.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
