@@ -193,7 +193,15 @@ Full timeline & Gantt: see **[docs/GTM_PLAN.md](docs/GTM_PLAN.md)**.
 
 ## 11. License
 
-Core: **MIT / Apache-2.0**. Commercial extensions under a separate commercial license.
+**Dual-licensed:**
+
+- **AGPL-3.0** (free) — personal, self-hosted, and open-source use. If you run a modified
+  version as a network service, AGPL requires you to publish your corresponding source. See
+  [`LICENSE`](LICENSE).
+- **Commercial License** (paid) — **required** to embed this software in a closed-source or
+  commercial product, or to run it inside a proprietary service without publishing your source.
+  Get it at **[holo.ai3d.art](https://holo.ai3d.art)**. See
+  [`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md).
 
 ---
 

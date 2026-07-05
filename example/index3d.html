@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>BusinessPad · 3D отчёт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+<link rel="icon" href="{{ url_for('static', filename='logo.svg') }}"/>
+<style>
+  html,body{height:100%;overflow:hidden;background:radial-gradient(circle at 50% 30%, #20255c 0%, #0b0e26 70%)}
+  #scene{position:fixed;inset:0}
+  #scene .css3d{position:absolute;inset:0}
+  .panel3d{width:340px;background:rgba(255,255,255,.97);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.45);
+    overflow:hidden;font-family:'Fira Sans',sans-serif}
+  .panel3d h3{background:var(--primary);color:#fff;font-size:15px;padding:12px 16px;font-weight:600}
+  .panel3d .line{display:flex;justify-content:space-between;padding:9px 16px;border-top:1px solid #f0f0f3;font-size:14px}
+  .panel3d .line .lbl{color:#85868A}.panel3d .line.tot{font-weight:600}.panel3d .line.tot .val{color:var(--primary)}
+  .panel3d.logo{background:transparent;box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:280px;height:280px}
+  .panel3d.logo model-viewer{width:220px;height:220px}
+  .panel3d.logo .cap{color:#fff;font-weight:700;font-size:20px;margin-top:4px;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+  /* верхняя панель управления */
+  .hud{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:10px;
+    padding:12px 16px;color:#fff;background:linear-gradient(180deg,rgba(11,14,38,.85),transparent)}
+  .hud .logo{font-weight:700;font-size:17px}
+  .hud .spacer{flex:1}
+  .hud button,.hud a{background:rgba(255,255,255,.14);color:#fff;border:none;border-radius:8px;
+    padding:8px 12px;font-family:inherit;font-size:13px;cursor:pointer;text-decoration:none}
+  .hud button:hover{background:rgba(255,255,255,.25)}
+  .hud .plabel{min-width:180px;text-align:center;font-weight:600}
+  .hint{position:fixed;bottom:14px;left:0;right:0;text-align:center;color:rgba(255,255,255,.6);font-size:12px;z-index:20;pointer-events:none}
+  .login-wrap{background:radial-gradient(circle at 50% 30%, #20255c 0%, #0b0e26 70%)}
+</style>
+</head>
+<body>
+
+<div id="login" class="login-wrap">
+  <div class="login-card">
+    <img class="logo-img" src="{{ url_for('static', filename='logo.svg') }}" alt="BusinessPad"/>
+    <div class="sub">3D-отчёт — вход</div>
+    <div class="field"><input id="login-pass" type="password" placeholder="Пароль" autocomplete="current-password"/></div>
+    <button class="btn" id="login-btn">Войти</button>
+    <div class="msg err" id="login-msg"></div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="hud">
+    <span class="logo">BusinessPad · 3D</span>
+    <span class="spacer"></span>
+    <button id="p-prev" title="Раньше">‹</button>
+    <span class="plabel" id="p-label">—</span>
+    <button id="p-next" title="Позже">›</button>
+    <a href="/" title="Обычный вид">2D</a>
+    <a href="#" id="logout">Выйти</a>
+  </div>
+  <div id="scene"></div>
+  <div class="hint">Тяните — вращение · колесо/щипок — зум · отчёт обновляется при смене периода</div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module" src="{{ url_for('static', filename='app3d.js') }}"></script>
+</body>
+</html>

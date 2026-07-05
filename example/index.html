@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>BusinessPad · Расходы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+<link rel="icon" href="{{ url_for('static', filename='logo.svg') }}"/>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+<!-- ЛОГИН -->
+<div id="login" class="login-wrap">
+  <div class="login-card">
+    <div id="logo3d-slot" class="logo3d"></div>
+    <img id="logo-svg" class="logo-img" src="{{ url_for('static', filename='logo.svg') }}" alt="BusinessPad"/>
+    <div class="sub">Учёт расходов — вход</div>
+    <div class="field"><input id="login-pass" type="password" placeholder="Пароль" autocomplete="current-password"/></div>
+    <button class="btn" id="login-btn">Войти</button>
+    <div class="msg err" id="login-msg"></div>
+  </div>
+</div>
+
+<!-- ПРИЛОЖЕНИЕ -->
+<div id="app" class="hidden">
+  <header class="appbar">
+    <img class="appbar-logo" src="{{ url_for('static', filename='logo.svg') }}" alt="BusinessPad"/>
+    <span class="spacer"></span>
+    <a class="link" href="/admin" target="_blank">Админ</a>
+    <a class="link" id="logout" href="#">Выйти</a>
+  </header>
+
+  <!-- переключатель периода -->
+  <div class="periodbar">
+    <button id="p-prev" class="pnav" title="Раньше">‹</button>
+    <button id="p-label" class="plabel">—</button>
+    <button id="p-next" class="pnav" title="Позже">›</button>
+  </div>
+  <div id="period-menu" class="pmenu hidden"></div>
+
+  <div class="rate-banner" id="rate-banner">
+    <div class="chip"><span class="k">Курс за период</span><span class="v" id="rate-period">—</span></div>
+    <div class="chip"><span class="k">Сегодня</span><span class="v" id="rate-today">—</span></div>
+    <div class="chip"><span class="k">Эффективный</span><span class="v" id="rate-eff">—</span></div>
+  </div>
+
+  <nav class="tabs">
+    <button data-tab="report" class="active">Отчёт</button>
+    <button data-tab="summary">Расходы</button>
+    <button data-tab="income">Приходы</button>
+    <button data-tab="add">Добавить</button>
+    <button data-tab="rates">Курсы</button>
+  </nav>
+
+  <main id="tab-summary" class="hidden">
+    <div id="legacy-summary" class="hidden"></div>
+    <div id="std-summary">
+      <div class="summary"><span class="count" id="sum-count">Частей: 0</span><span class="total zero" id="sum-total">Итого: —</span></div>
+      <div style="margin-bottom:12px"><button class="btn ghost" id="sync-btn" style="width:auto;padding:8px 14px;font-size:13px">↻ Подтянуть с платформ</button></div>
+      <div class="cards" id="cards"></div>
+      <div class="msg" id="summary-msg"></div>
+    </div>
+  </main>
+
+  <main id="tab-income" class="hidden">
+    <div class="summary"><span class="count" id="inc-count">Приходов: 0</span><span class="total pos" id="inc-total">Итого: —</span></div>
+    <div class="cards" id="inc-cards"></div>
+    <div class="empty" style="padding-top:8px;font-size:12px">Удаление приходов и расходов — только в админке.</div>
+  </main>
+
+  <main id="tab-add" class="hidden">
+    <div class="seg"><button id="seg-exp" class="seg-btn active">Расход</button><button id="seg-inc" class="seg-btn">Приход</button></div>
+    <div class="field"><label>Наименование</label><input id="f-name" placeholder="Например: Claude / Anthropic"/></div>
+    <div class="row2">
+      <div class="field"><label>Сумма</label><input id="f-amount" type="number" step="0.01" inputmode="decimal" placeholder="0.00"/></div>
+      <div class="field"><label>Валюта</label><select id="f-currency"><option>USD</option><option>EUR</option><option>CNY</option><option>RUB</option></select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Дата *</label><input id="f-date" type="date" required/></div>
+      <div class="field"><label>Источник</label><select id="f-source"><option value="manual">Вручную</option><option>Anthropic</option><option>OpenAI</option><option>VDSina</option><option>Contabo</option><option>King.ai</option></select></div>
+    </div>
+    <div class="field"><label id="f-extra-label">Категория / примечание</label><input id="f-category" placeholder="необязательно"/></div>
+    <button class="btn secondary" id="add-btn">Добавить</button>
+    <div class="msg" id="add-msg"></div>
+  </main>
+
+  <main id="tab-rates" class="hidden"><div id="rates-box"></div></main>
+  <main id="tab-report"><div id="report"></div></main>
+
+  <!-- яркая боковая вкладка MCP -->
+  <button id="mcp-fab" title="Инструменты агента">MCP</button>
+
+  <!-- модалка MCP -->
+  <div id="mcp-modal" class="modal hidden">
+    <div class="modal-card">
+      <button class="modal-x" id="mcp-close">✕</button>
+      <div class="mcp-badge">MCP · AI-агент</div>
+      <h2 class="mcp-title">Инструменты агента BusinessPad</h2>
+      <p class="mcp-lead">Учёт расходов — только начало. Планируемые возможности агента (MCP-инструменты):</p>
+      <ul class="mcp-list">
+        <li><b>Автосбор расходов</b> со всех платформ в реальном времени: Anthropic, OpenAI, VDSina, FirstVDS, Contabo, Telegram Stars.</li>
+        <li><b>Курсы из нескольких источников</b> (CoinGecko, ЦБ РФ, Binance/Bybit P2P) с автоусреднением и историей.</li>
+        <li><b>OCR чеков и скринов</b> — агент заводит расход из фото платежа сам.</li>
+        <li><b>Голосовой ввод</b> расхода/прихода прямо в Telegram.</li>
+        <li><b>ИИ-категоризация</b> и авто-теги операций.</li>
+        <li><b>Прогноз бюджета</b> и алерты о перерасходе до конца периода.</li>
+        <li><b>Экспорт</b> в Excel, Google Sheets (двусторонняя синхронизация) и PDF.</li>
+        <li><b>Мультивалютность</b> USD / RUB / EUR / CNY с пересчётом по эффективному курсу.</li>
+        <li><b>Еженедельные сводки</b> и напоминания в Telegram.</li>
+        <li><b>Ролевой доступ</b>, аудит изменений, приватные пространства команд.</li>
+        <li><b>Открытый API</b> и MCP-сервер для подключения к любым ИИ-агентам.</li>
+        <li><b>Автономный агент</b>: закрытие периода, сверка, черновик отчёта — по расписанию.</li>
+      </ul>
+      <div class="mcp-form">
+        <div class="mcp-badge2">Заказать агента / доступ</div>
+        <div class="field"><label>Имя</label><input id="r-name" placeholder="Как к вам обращаться"/></div>
+        <div class="field"><label>Контакт (Telegram / email)</label><input id="r-contact" placeholder="@username или mail@…"/></div>
+        <div class="field"><label>Что нужно</label><input id="r-message" placeholder="Коротко о задаче"/></div>
+        <button class="btn secondary" id="r-send">Отправить заявку</button>
+        <div class="msg" id="r-msg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

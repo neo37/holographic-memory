@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+
+<!-- ============ SEO ============ -->
+<title>Holographic Memory — Associative Long-Term Memory for Claude & Cursor (MCP)</title>
+<meta name="description" content="Open-source, privacy-first holographic long-term memory for AI agents. Built on Kanerva SDM, it recalls by association — not keywords. Free local mode, $5/mo encrypted cloud sync for Claude Desktop & Cursor via MCP."/>
+<meta name="keywords" content="MCP server, AI memory, long-term memory, Claude Desktop, Cursor, holographic memory, Sparse Distributed Memory, Kanerva SDM, associative memory, vector RAG alternative, Model Context Protocol, agent memory, Go MCP server"/>
+<meta name="author" content="Holographic Memory"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://holo.ai3d.art/"/>
+<meta name="theme-color" content="#0b0e26"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://holo.ai3d.art/"/>
+<meta property="og:title" content="Holographic Memory — Associative Long-Term Memory for AI Agents"/>
+<meta property="og:description" content="Memory that thinks by association, not keyword match. Say 'I don't like Python' today; next month it recalls 'use Go' — plain RAG can't. Open-source, privacy-first, MCP."/>
+<meta property="og:site_name" content="Holographic Memory"/>
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Holographic Memory — Associative Memory for Claude & Cursor"/>
+<meta name="twitter:description" content="Open-source holographic long-term memory (Kanerva SDM) for AI agents via MCP. Free local mode, $5/mo cloud sync."/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Holographic Memory",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Linux, macOS, Windows",
+  "description": "Open-source holographic long-term memory for AI agents, built on Kanerva Sparse Distributed Memory. Associative recall via the Model Context Protocol for Claude Desktop and Cursor.",
+  "url": "https://holo.ai3d.art/",
+  "offers": [
+    { "@type": "Offer", "name": "Local", "price": "0", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Cloud / Pro", "price": "5", "priceCurrency": "USD" }
+  ],
+  "license": "https://www.gnu.org/licenses/agpl-3.0.html"
+}
+</script>
+
+<style>
+:root{
+  --bg-0:#0b0e26; --bg-1:#20255c;
+  --primary:#5b6cff; --primary-2:#8b5bff;
+  --cyan:#3fe0d0; --magenta:#c65cff;
+  --card:rgba(255,255,255,.97); --ink:#171a2b; --muted:#85868A; --line:#eef0f4;
+  --radius:16px; --shadow:0 24px 70px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Fira Sans',system-ui,sans-serif;color:#eef0ff;
+  background:radial-gradient(circle at 50% -8%, #262c74 0%, var(--bg-1) 32%, var(--bg-0) 72%);
+  background-attachment:fixed;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+code,pre,.mono{font-family:'Fira Code',ui-monospace,monospace}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+@media (prefers-reduced-motion:no-preference){
+  .rise{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+
+/* header */
+.nav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;
+  padding:14px 22px;background:linear-gradient(180deg,rgba(11,14,38,.9),rgba(11,14,38,.4) 70%,transparent);
+  backdrop-filter:blur(8px)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:.2px}
+.dot{width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0%,var(--cyan) 22%,var(--primary) 55%,var(--primary-2) 100%);
+  box-shadow:0 0 22px rgba(91,108,255,.7)}
+.nav .spacer{flex:1}
+.nav a.link{color:rgba(255,255,255,.82);text-decoration:none;font-size:14px;padding:8px 10px;border-radius:8px}
+.nav a.link:hover{background:rgba(255,255,255,.12);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-family:inherit;
+  font-weight:600;font-size:14px;padding:11px 18px;border-radius:10px;text-decoration:none;transition:.18s}
+.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;
+  box-shadow:0 10px 26px rgba(91,108,255,.45)}
+.btn.primary:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(91,108,255,.6)}
+.btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.16)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+
+/* hero */
+.hero{text-align:center;padding:64px 0 40px}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;font-weight:600;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--cyan);background:rgba(63,224,208,.1);
+  border:1px solid rgba(63,224,208,.25);padding:6px 12px;border-radius:999px}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:20px auto 0;max-width:16ch;font-weight:700;
+  text-wrap:balance;background:linear-gradient(180deg,#fff,#c4c9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(16px,2.2vw,20px);color:rgba(255,255,255,.78);max-width:60ch;margin:20px auto 0;text-wrap:balance}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.trust{margin-top:22px;font-size:13px;color:rgba(255,255,255,.55)}
+
+/* demo chat */
+.demo{max-width:560px;margin:44px auto 0;background:var(--card);color:var(--ink);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;text-align:left}
+.demo .bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line);
+  font-size:12.5px;color:var(--muted);font-weight:600}
+.demo .bar i{width:10px;height:10px;border-radius:50%;background:#e2e4ea;display:inline-block}
+.demo .bar i:nth-child(1){background:#ff6b6b}.demo .bar i:nth-child(2){background:#ffd23f}.demo .bar i:nth-child(3){background:#4ec777}
+.demo .body{padding:16px}
+.msg{max-width:82%;padding:10px 14px;border-radius:14px;font-size:14.5px;margin:8px 0}
+.msg.u{background:#eef0f7;color:#2a2d3c;margin-left:auto;border-bottom-right-radius:5px}
+.msg.a{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-bottom-left-radius:5px;
+  box-shadow:0 8px 22px rgba(91,108,255,.3)}
+.when{font-size:11px;color:var(--muted);text-align:center;margin:12px 0 4px;letter-spacing:.4px;text-transform:uppercase}
+.recall{font-size:12px;color:var(--primary);font-weight:600;margin-top:4px;display:flex;align-items:center;gap:6px}
+
+/* sections */
+section{padding:56px 0}
+.h2{font-size:clamp(26px,4vw,40px);font-weight:700;text-align:center;text-wrap:balance;margin:0 0 8px}
+.sub{text-align:center;color:rgba(255,255,255,.7);max-width:58ch;margin:0 auto 34px}
+
+/* comparison */
+.cmp{background:var(--card);color:var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.cmp table{width:100%;border-collapse:collapse;font-size:14.5px}
+.cmp th,.cmp td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line)}
+.cmp thead th{background:#f6f7fb;color:#2a2d3c;font-weight:700}
+.cmp tbody tr:last-child td{border-bottom:none}
+.cmp .rag{color:#c0392b}.cmp .sdm{color:#1f9d76;font-weight:600}
+.cmp td:first-child{color:var(--muted);font-weight:600}
+
+/* cards grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.tool{background:var(--card);color:var(--ink);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.tool .tag{font-family:'Fira Code',monospace;font-size:13px;font-weight:500;color:var(--primary)}
+.tool h3{margin:8px 0 6px;font-size:16px}
+.tool p{margin:0;color:#525463;font-size:14px}
+
+/* interference banner */
+.inter{background:linear-gradient(135deg,rgba(198,92,255,.14),rgba(91,108,255,.14));
+  border:1px solid rgba(198,92,255,.3);border-radius:var(--radius);padding:26px;text-align:center}
+.inter .q{font-size:clamp(18px,2.6vw,24px);font-weight:600;color:#fff;text-wrap:balance}
+.inter .n{color:var(--magenta);font-weight:700}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;align-items:stretch}
+.plan{background:var(--card);color:var(--ink);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column}
+.plan.feat{outline:2px solid var(--primary);position:relative}
+.plan.feat::after{content:'Most popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;font-size:11px;font-weight:700;
+  padding:5px 12px;border-radius:999px;letter-spacing:.4px}
+.plan .name{font-weight:700;font-size:15px;color:#2a2d3c}
+.plan .price{font-size:34px;font-weight:700;margin:6px 0 2px}
+.plan .price small{font-size:14px;color:var(--muted);font-weight:500}
+.plan ul{list-style:none;padding:0;margin:16px 0 22px;flex:1}
+.plan li{padding:7px 0 7px 24px;position:relative;font-size:14px;color:#43465a;border-top:1px solid var(--line)}
+.plan li::before{content:'✓';position:absolute;left:0;color:var(--primary);font-weight:700}
+.plan .btn{width:100%;justify-content:center}
+
+/* install */
+.install{background:var(--card);color:var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);
+  max-width:720px;margin:0 auto;overflow:hidden}
+.install .bar{padding:12px 18px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted);font-weight:600}
+.install pre{margin:0;padding:20px;font-size:14px;overflow-x:auto;color:#2a2d3c}
+.install .cmt{color:var(--muted)}
+
+footer{padding:44px 0;border-top:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:14px}
+.foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+footer a{color:rgba(255,255,255,.8);text-decoration:none}
+footer a:hover{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <span class="brand"><span class="dot"></span> Holographic Memory</span>
+  <span class="spacer"></span>
+  <a class="link" href="#how">How it works</a>
+  <a class="link" href="#tools">Tools</a>
+  <a class="link" href="#pricing">Pricing</a>
+  <a class="link" href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">GitHub ★</a>
+  <a class="btn primary" href="#install">Install free</a>
+</header>
+
+<!-- HERO -->
+<div class="wrap hero">
+  <span class="eyebrow rise">◆ Open-source · Privacy-first · MCP</span>
+  <h1 class="rise" style="animation-delay:.05s">Memory that thinks by association, not keywords</h1>
+  <p class="lead rise" style="animation-delay:.12s">Long-term memory for Claude Desktop &amp; Cursor, built on Kanerva's
+    Sparse Distributed Memory — the associative model recent research proved equivalent to Transformer Attention.
+    It recalls the <em>meaning</em> behind a vague prompt, even from noise.</p>
+  <div class="cta rise" style="animation-delay:.18s">
+    <a class="btn primary" href="#install">Install free (local)</a>
+    <a class="btn ghost" href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">★ Star on GitHub</a>
+  </div>
+  <p class="trust rise" style="animation-delay:.24s">100% open-source · Your memories never leave your machine · $5/mo optional cloud sync</p>
+
+  <!-- killer demo -->
+  <div class="demo rise" style="animation-delay:.3s">
+    <div class="bar"><i></i><i></i><i></i> &nbsp;Claude · Holographic Memory</div>
+    <div class="body">
+      <div class="when">Week 1</div>
+      <div class="msg u">I really don't like Python.</div>
+      <div class="msg a">Noted — I'll remember that. 🧠</div>
+      <div class="when">Week 4 · different chat</div>
+      <div class="msg u">What should I write this quick script in?</div>
+      <div class="msg a">Go — you told me you dislike Python, and Go fits a quick CLI well.
+        <div class="recall">↺ recalled by association · no keyword match</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON -->
+<section id="how"><div class="wrap">
+  <h2 class="h2">Plain RAG can't do that. Interference can.</h2>
+  <p class="sub">Classic vector RAG is literal: no keyword overlap, no hit. SDM smears every fact across a
+    10,000-dimensional space and reconstructs the signal by majority vote inside the activation radius.</p>
+  <div class="cmp">
+    <table>
+      <thead><tr><th></th><th>Vector RAG</th><th>Holographic Memory (SDM)</th></tr></thead>
+      <tbody>
+        <tr><td>Match model</td><td class="rag">keyword / cosine</td><td class="sdm">associative interference</td></tr>
+        <tr><td>Vague query</td><td class="rag">misses</td><td class="sdm">reconstructs from noise</td></tr>
+        <tr><td>Conflicting facts</td><td class="rag">silently coexist</td><td class="sdm">flagged as interference</td></tr>
+        <tr><td>Foundation</td><td class="rag">ad-hoc embeddings</td><td class="sdm">Kanerva SDM ≈ Attention</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+
+<!-- TOOLS -->
+<section id="tools"><div class="wrap">
+  <h2 class="h2">Four tools your agent will actually use</h2>
+  <p class="sub">Declared over MCP (stdio). Each one does something a plain database can't.</p>
+  <div class="grid">
+    <div class="tool"><div class="tag">recall_by_association</div><h3>Associative recall</h3>
+      <p>Retrieve a de-noised "meaning cloud" from a vague or emotional cue — instantly remember context mentioned only in passing.</p></div>
+    <div class="tool"><div class="tag">store_holographic_snapshot</div><h3>Distributed write</h3>
+      <p>Store a fact with context, emotional valence, importance and tags, superposed across the association cloud.</p></div>
+    <div class="tool"><div class="tag">interference_analysis</div><h3>Conflict detection</h3>
+      <p>Spot when a new fact contradicts an existing belief and surface it — "You moved? I had London on file."</p></div>
+    <div class="tool"><div class="tag">consolidate_and_prune</div><h3>Sleep &amp; compress</h3>
+      <p>Drop weak associations, reinforce frequent ones — keeps the store fast and free of clutter.</p></div>
+  </div>
+</div></section>
+
+<!-- INTERFERENCE MOMENT -->
+<section><div class="wrap">
+  <div class="inter">
+    <p class="q">"You moved to Berlin? <span class="n">I remembered London</span> — want me to update that?"</p>
+    <p class="sub" style="margin:14px auto 0">Interference detection makes the agent feel human — it notices when your story changes.</p>
+  </div>
+</div></section>
+
+<!-- PRICING -->
+<section id="pricing"><div class="wrap">
+  <h2 class="h2">Free to run. $5 to forget nothing, everywhere.</h2>
+  <p class="sub">The engine is open-source and free forever. Pay only for convenience open code can't copy.</p>
+  <div class="plans">
+    <div class="plan">
+      <div class="name">Local</div>
+      <div class="price">Free</div>
+      <div style="color:var(--muted);font-size:13px">Open-source · AGPL-3.0</div>
+      <ul>
+        <li>Full SDM engine + all 4 tools</li>
+        <li>Local SQLite store</li>
+        <li>100% private — nothing leaves your machine</li>
+        <li>Runs in Claude Desktop &amp; Cursor</li>
+      </ul>
+      <a class="btn ghost" href="#install">Install</a>
+    </div>
+    <div class="plan feat">
+      <div class="name">Cloud / Pro</div>
+      <div class="price">$5<small>/mo</small></div>
+      <div style="color:var(--muted);font-size:13px">Everything in Local, plus</div>
+      <ul>
+        <li>Encrypted cross-device sync</li>
+        <li>Same memory in Claude at work &amp; Cursor at home</li>
+        <li>Managed hosting + automatic backups</li>
+        <li>Semantic-cloud visualization</li>
+      </ul>
+      <a class="btn primary" href="https://holo.ai3d.art/#pricing">Get Pro</a>
+    </div>
+    <div class="plan">
+      <div class="name">Business</div>
+      <div class="price">Custom</div>
+      <div style="color:var(--muted);font-size:13px">B2B</div>
+      <ul>
+        <li>Dual-licensing for closed-source products</li>
+        <li>Custom SDM integrations</li>
+        <li>Priority support &amp; consulting</li>
+        <li>SIEM / logs &amp; game-engine modules</li>
+      </ul>
+      <a class="btn ghost" href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">Contact</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- INSTALL -->
+<section id="install"><div class="wrap">
+  <h2 class="h2">One command to remember</h2>
+  <p class="sub">Free local mode needs no key. Add a license key only for encrypted cloud sync.</p>
+  <div class="install">
+    <div class="bar">terminal — via Smithery</div>
+    <pre>npx -y @smithery/cli install holographic-memory</pre>
+  </div>
+  <div class="install" style="margin-top:16px">
+    <div class="bar">claude_desktop_config.json</div>
+<pre>{
+  "mcpServers": {
+    "holographic-memory": {
+      "command": "uvx",
+      "args": ["holographic-memory-server"],
+      "env": {
+        "MEMORY_MODE": "LOCAL",              <span class="cmt">// free, private</span>
+        "MEMORY_LICENSE_KEY": ""             <span class="cmt">// optional — cloud sync</span>
+      }
+    }
+  }
+}</pre>
+  </div>
+</div></section>
+
+<footer><div class="wrap foot">
+  <span class="brand"><span class="dot"></span> Holographic Memory</span>
+  <span>Open-source Kanerva SDM memory for AI agents · <a href="https://holo.ai3d.art">holo.ai3d.art</a></span>
+  <span>
+    <a href="https://github.com/neo37/holographic-memory" target="_blank" rel="noopener">GitHub</a> ·
+    <a href="https://github.com/neo37/holographic-memory/blob/master/docs/TECHNICAL_SPEC.md" target="_blank" rel="noopener">Spec</a> ·
+    <a href="https://github.com/neo37/holographic-memory/blob/master/docs/GTM_PLAN.md" target="_blank" rel="noopener">Roadmap</a>
+  </span>
+</div></footer>
+
+</body>
+</html>
